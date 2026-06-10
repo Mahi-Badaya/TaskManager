@@ -11,8 +11,13 @@ public class AppUser {
 
     private String name;
 
-    @Email
+    @Email @Column(unique = true, nullable = false)
     private String email;
+
+    private String passwordHash;
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;
 
     public AppUser(){}
 
@@ -25,4 +30,10 @@ public class AppUser {
 
     public String getEmail() {return email;}
     public void setEmail(String email){this.email = email;}
+
+    public Role getRole() {return role;}
+    public void setRole(Role role) {this.role = role;}
+
+    public String getPasswordHash(){return passwordHash;}
+    public void setPasswordHash(String passwordHash) {this.passwordHash = passwordHash;}
 }
