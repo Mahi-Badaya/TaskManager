@@ -44,4 +44,13 @@ public class GlobalExceptionHandler {
                 "Something went wrong",  // don't leak internals to clients
                 request.getRequestURI());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
-    }}
+    }
+
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<ErrorResponse> duplicateEmail(
+            DuplicateEmailException ex, HttpServletRequest request) {
+        ErrorResponse body = ErrorResponse.of(
+                409, "Conflict", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
+    }
+}

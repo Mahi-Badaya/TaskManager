@@ -2,7 +2,12 @@ package com.mahi.taskmanager.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
+
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 public class AppUser {
     @Id
@@ -18,6 +23,8 @@ public class AppUser {
 
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
+
+    private LocalDateTime createdAt;
 
     public AppUser(){}
 
@@ -36,4 +43,7 @@ public class AppUser {
 
     public String getPasswordHash(){return passwordHash;}
     public void setPasswordHash(String passwordHash) {this.passwordHash = passwordHash;}
+
+    @CreatedDate
+    public LocalDateTime getCreatedAt(){return createdAt;}
 }
