@@ -53,4 +53,14 @@ public class GlobalExceptionHandler {
                 409, "Conflict", ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorResponse> invalidCredentials(
+            InvalidCredentialsException ex, HttpServletRequest request){
+        ErrorResponse body = ErrorResponse.of(
+                401, "Unauthorized",
+                "Invalid email or password", request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
+    }
 }
