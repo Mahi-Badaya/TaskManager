@@ -63,4 +63,12 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
     }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ErrorResponse> forbiddenResponse(
+            ForbiddenException ex, HttpServletRequest request){
+        ErrorResponse body = ErrorResponse.of(
+                403, "Forbidden", ex.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
+    }
 }
